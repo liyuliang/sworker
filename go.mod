@@ -1,1 +1,1 @@
-module worker
+module github.com/liyuliang/sworker
