@@ -1,6 +1,6 @@
 package main
 
-import "sworker/route"
+import "github.com/liyuliang/sworker/route"
 
 func main() {
 	route.Start()
