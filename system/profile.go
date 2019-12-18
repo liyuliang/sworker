@@ -1,7 +1,6 @@
-package route
+package system
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/mackerelio/go-osstat/memory"
 	"fmt"
 	"github.com/mackerelio/go-osstat/cpu"
@@ -13,30 +12,8 @@ import (
 	"strings"
 )
 
-func profile(c *gin.Context) {
-
-	//osname := getOsName()
-	system := getLinuxVersion()
-	corenum := getCoreNum()
-
-	mem := getMemUsage()
-	//cpu := getCpuUsage()
-	load := getLoadAverage()
-
-	disk := getDiskUsage()
-
-	text := fmt.Sprintf("system: %s\n", system)
-	text += fmt.Sprintf("core: %d\n", corenum)
-	//text += fmt.Sprintf("cpu: %s\n", cpu)
-	text += fmt.Sprintf("load: %s\n", load)
-	text += fmt.Sprintf("memory: %s\n", mem)
-	text += fmt.Sprintf("disk: %s\n", disk)
-	c.String(200, text)
-
-}
-
 //获取系统发行版本
-func getLinuxVersion() (v string) {
+func GetLinuxVersion() (v string) {
 
 	switch runtime.GOOS {
 	case "darwin":
@@ -56,7 +33,7 @@ func getLinuxVersion() (v string) {
 }
 
 //获取系统名称
-func getOsName() string {
+func GetOsName() string {
 	name, err := os.Hostname()
 	if err == nil {
 		return name
@@ -65,16 +42,16 @@ func getOsName() string {
 }
 
 //获取系统核心数量
-func getCoreNum() (num int) {
+func GetCoreNum() (num int) {
 	num = runtime.GOMAXPROCS(0)
 	return num
 }
 
 //获取负载
-func getLoadAverage() (s string) {
+func GetLoadAverage() (s string) {
 	switch runtime.GOOS {
 	case "darwin":
-		s, _ = shell(`w | head -n1 | cut -d":" -f4`)
+		s, _ = shell(`w | head -n1`)
 	case "linux":
 		s, _ = shell(`uptime`)
 	}
@@ -84,7 +61,7 @@ func getLoadAverage() (s string) {
 }
 
 //获取磁盘占用量
-func getDiskUsage() (u string) {
+func GetDiskUsage() (u string) {
 	str, _ := shell("df -lh")
 	s := strings.Split(str, "\n")
 	real := ""
@@ -129,7 +106,7 @@ func checkErr(err error) {
 	}
 }
 
-func getCpuUsage() (u string) {
+func GetCpuUsage() (u string) {
 	before, err := cpu.Get()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
@@ -147,7 +124,7 @@ func getCpuUsage() (u string) {
 	return u
 }
 
-func getMemUsage() (u string) {
+func GetMemUsage() (u string) {
 
 	memory, err := memory.Get()
 	if err != nil {
