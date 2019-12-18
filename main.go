@@ -1,25 +1,20 @@
 package main
 
 import (
-    "github.com/gin-gonic/gin"
+    "fmt"
+    "os"
+
+    "github.com/mackerelio/go-osstat/memory"
 )
 
 func main() {
-
-    //cli 中获取 -a, --auth 提交到队列中心校验身份
-    //cli 中获取 -p, 开启 web 界面(获取 top 信息)
-    //程序启动
-    //上报 ip、top、启动时间
-    //请求爬虫任务队列
-    //根据任务队列优先级{队列名称:优先级}, 获取任务
-    //if empty { next queue }
-    //if current_queue_max_failed { next queue }
-    //if no_available_queue { hold on }
-
-    r := gin.Default()
-    r.GET("/", func(context *gin.Context) {
-
-    })
-    r.Run(":8080")
+    memory, err := memory.Get()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "%s\n", err)
+        return
+    }
+    fmt.Printf("memory total: %d bytes\n", memory.Total)
+    fmt.Printf("memory used: %d bytes\n", memory.Used)
+    fmt.Printf("memory cached: %d bytes\n", memory.Cached)
+    fmt.Printf("memory free: %d bytes\n", memory.Free)
 }
-
