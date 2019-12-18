@@ -1,4 +1,6 @@
 # github.com/mackerelio/go-osstat v0.1.0
+github.com/mackerelio/go-osstat/cpu
+github.com/mackerelio/go-osstat/disk
 github.com/mackerelio/go-osstat/memory
 # golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a
 golang.org/x/sys/unix
