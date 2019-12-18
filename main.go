@@ -2,7 +2,10 @@ package main
 
 import (
 	"github.com/liyuliang/sworker/route"
+	"github.com/liyuliang/sworker/system"
 	"flag"
+	"os"
+	"fmt"
 )
 
 func main() {
@@ -17,17 +20,33 @@ func main() {
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
 
+	system.Init(g,a)
 	route.Start(p)
 }
 
 var (
 	a string
 	p string
+	g string
 )
 
 func init() {
+	required := []string{"a","g"}
+
 	flag.StringVar(&a, "a", "", "auth token")
-	flag.StringVar(&p, "p", "8989", "web port")
+	flag.StringVar(&p, "p", "8888", "web port")
+	flag.StringVar(&p, "g", "", "gateway url")
 
 	flag.Parse()
+
+	seen := make(map[string]bool)
+	flag.Visit(func(f *flag.Flag) { seen[f.Name] = true })
+
+	for _, req := range required {
+
+		if !seen[req] {
+			fmt.Fprintf(os.Stderr, "flag -%s is required \n", req)
+			os.Exit(2)
+		}
+	}
 }
