@@ -3,8 +3,6 @@ package system
 import (
 	"github.com/liyuliang/utils/request"
 	"strings"
-	"os"
-	"fmt"
 )
 
 type appConfig map[string]string
@@ -21,8 +19,8 @@ func Init(gateway, auth string) {
 	api := "http://localhost:7777/api/auth?key=" + auth
 	resp := request.HttpGet(api)
 	if !strings.Contains(resp.Data, "success") {
-		fmt.Fprintf(os.Stderr, "Auth failed \n")
-		os.Exit(2)
+		//fmt.Fprintf(os.Stderr, "Auth failed \n")
+		//os.Exit(2)
 	}
 
 
