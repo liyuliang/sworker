@@ -1,4 +1,4 @@
-module sworker
+module github.com/liyuliang/sworker
 
 go 1.12
 
