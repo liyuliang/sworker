@@ -20,7 +20,7 @@ func main() {
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
 
-	system.Init(g,a)
+	system.Init(g, a)
 	route.Start(p)
 }
 
@@ -31,7 +31,7 @@ var (
 )
 
 func init() {
-	required := []string{"a","g"}
+	required := []string{"a", "g"}
 
 	flag.StringVar(&a, "a", "", "auth token")
 	flag.StringVar(&p, "p", "8888", "web port")
