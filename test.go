@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.con/liyuliang/configmodel"
+	"github.com/liyuliang/configmodel"
 	"github.com/BurntSushi/toml"
 	"os"
 )
