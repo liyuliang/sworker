@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/liyuliang/sworker/route"
 	"github.com/liyuliang/sworker/system"
+	"github.com/liyuliang/configmodel"
 	"flag"
 	"os"
 	"fmt"
@@ -19,6 +20,7 @@ func main() {
 	//if empty { next queue }
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
+	_ := new(configmodel.Actions)
 
 	system.Init(g, a)
 	route.Start(p)
