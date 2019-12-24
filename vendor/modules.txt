@@ -18,6 +18,8 @@ github.com/imroc/req
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.1.0
 github.com/leodido/go-urn
+# github.com/liyuliang/configmodel v0.0.0-20191224080310-8784ddec76cd
+github.com/liyuliang/configmodel
 # github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0
 github.com/liyuliang/utils/format
 github.com/liyuliang/utils/regex

@@ -6,7 +6,7 @@ replace golang.org/x/sys v0.0.0-20190410235845-0ad05ae3009d => github.com/golang
 
 require (
 	github.com/gin-gonic/gin v1.5.0
-	github.com/imroc/req v0.2.4 // indirect
+	github.com/liyuliang/configmodel v0.0.0-20191224080310-8784ddec76cd
 	github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0
 	github.com/mackerelio/go-osstat v0.1.0
 )
