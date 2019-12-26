@@ -12,7 +12,7 @@ require (
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
-	github.com/liyuliang/configmodel v0.0.0-20191226073601-660d3613a1d0
+	github.com/liyuliang/configmodel v1.0.1
 	github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec
 	github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0
 	github.com/mackerelio/go-osstat v0.1.0

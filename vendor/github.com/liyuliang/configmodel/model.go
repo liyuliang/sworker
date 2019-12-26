@@ -6,12 +6,19 @@ type Target struct {
 	Value string
 }
 
+type Option struct {
+	Key   string
+	Type  string
+	Value string
+
+}
+
 type Operation struct {
 	Key   string
 	Type  string
 	Value string
 
-	Option map[string]string
+	Option Option
 }
 
 type Http struct {
