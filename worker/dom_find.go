@@ -24,11 +24,21 @@ func (d *dom_find) Do(a configmodel.Action) {
 	if t != nil {
 		d, ok := t.(*parser.Dom)
 		if ok {
-			v := d.Find(a.Operation.Value).Text()
-			setTempData(a.Operation.Key, v)
+
+			if a.Operation.Option.Key == "" {
+				v := d.Find(a.Operation.Value).Text()
+				setTempData(a.Operation.Key, v)
+
+			} else {
+
+				switch a.Operation.Option.Type {
+				case "attr":
+					v, _ := d.Find(a.Operation.Value).Attr(a.Operation.Option.Key)
+					setTempData(a.Operation.Key, v)
+				}
+			}
 
 		}
 
 	}
-	return
 }

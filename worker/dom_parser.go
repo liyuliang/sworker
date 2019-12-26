@@ -34,5 +34,4 @@ func (d *dom_parser) Do(a configmodel.Action) {
 			}
 		}
 	}
-	return
 }

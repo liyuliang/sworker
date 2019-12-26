@@ -56,8 +56,6 @@ func (d *download) Do(a configmodel.Action) {
 
 	setTempData(a.Target.Key, a.Target.Value)
 	setTempData(a.Operation.Key, v)
-
-	return
 }
 
 func gbkToUtf8(text string) string {

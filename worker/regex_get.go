@@ -35,5 +35,4 @@ func (d *regex_get) Do(a configmodel.Action) {
 			}
 		}
 	}
-	return
 }

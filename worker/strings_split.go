@@ -29,5 +29,4 @@ func (d *strings_Split) Do(a configmodel.Action) {
 			setTempData(a.Operation.Key, vals)
 		}
 	}
-	return
 }
