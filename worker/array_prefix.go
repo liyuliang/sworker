@@ -11,13 +11,14 @@ func (d *array_prefix) Name() string {
 
 func (d *array_prefix) Do(a configmodel.Action) string{
 
-	t := getTempTarget(a)
-	if t != nil {
-		v, ok := t.([]string)
-		if ok {
-			for _, value := range v {
-
-			}
-		}
-	}
+	return ""
+	//t := getTempTarget(a)
+	//if t != nil {
+	//	v, ok := t.([]string)
+	//	if ok {
+	//		for _, value := range v {
+	//
+	//		}
+	//	}
+	//}
 }
