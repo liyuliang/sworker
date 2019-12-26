@@ -35,10 +35,10 @@ func (d *download) Before(a configmodel.Action) configmodel.Action {
 	return a
 }
 
-func (d *download) Do(a configmodel.Action) string {
+func (d *download) Do(a configmodel.Action) {
 
 	if a.Target.Key != "url" {
-		return ""
+		return
 	}
 
 	a = d.Before(a)
@@ -54,11 +54,10 @@ func (d *download) Do(a configmodel.Action) string {
 		v = regex.Replace(v, a.After.Replace.From, a.After.Replace.To)
 	}
 
-	setTempData(a.Target.Key,a.Target.Value)
-	setTempData(a.Operation.Key,v)
+	setTempData(a.Target.Key, a.Target.Value)
+	setTempData(a.Operation.Key, v)
 
-
-	return a.Target.Value
+	return
 }
 
 func gbkToUtf8(text string) string {

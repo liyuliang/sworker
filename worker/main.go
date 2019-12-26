@@ -78,9 +78,10 @@ func Run(a configmodel.Action) {
 		return
 	}
 	//log.Printf("worker %s prepare run", w().Name())
-	data := w().Do(a)
+	w().Do(a)
 
-	if data != "" {
+	data := getTempData(a.Return)
+	if a.Return != "" && data != "" {
 		setReturnData(a.Return, data)
 	}
 
@@ -88,7 +89,7 @@ func Run(a configmodel.Action) {
 
 type worker interface {
 	Name() string
-	Do(a configmodel.Action) string
+	Do(a configmodel.Action)
 }
 
 type Creator func() worker

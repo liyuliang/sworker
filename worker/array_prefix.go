@@ -2,7 +2,6 @@ package worker
 
 import (
 	"github.com/liyuliang/configmodel"
-	"log"
 )
 
 func init() {
@@ -18,7 +17,7 @@ func (d *array_prefix) Name() string {
 	return "array_prefix"
 }
 
-func (d *array_prefix) Do(a configmodel.Action) string {
+func (d *array_prefix) Do(a configmodel.Action) {
 
 	var data interface{}
 
@@ -27,7 +26,7 @@ func (d *array_prefix) Do(a configmodel.Action) string {
 	}
 
 	if data == nil {
-		return ""
+		return
 	}
 
 	prefix := data.(string)
@@ -47,5 +46,5 @@ func (d *array_prefix) Do(a configmodel.Action) string {
 			replaceTempData(a.Target.Key, newArr)
 		}
 	}
-	return ""
+	return
 }

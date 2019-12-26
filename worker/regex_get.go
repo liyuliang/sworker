@@ -18,7 +18,7 @@ func (d *regex_get) Name() string {
 	return "regex_get"
 }
 
-func (d *regex_get) Do(a configmodel.Action) string {
+func (d *regex_get) Do(a configmodel.Action) {
 	t := getTempTarget(a)
 	if t != nil {
 		v, ok := t.(string)
@@ -35,5 +35,5 @@ func (d *regex_get) Do(a configmodel.Action) string {
 			}
 		}
 	}
-	return ""
+	return
 }
