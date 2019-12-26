@@ -24,7 +24,7 @@ github.com/imroc/req
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/liyuliang/configmodel v0.0.0-20191224080310-8784ddec76cd
+# github.com/liyuliang/configmodel v0.0.0-20191226073601-660d3613a1d0
 github.com/liyuliang/configmodel
 # github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec
 github.com/liyuliang/dom-parser

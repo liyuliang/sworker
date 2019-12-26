@@ -1,6 +1,5 @@
 package configmodel
 
-
 type Target struct {
 	Key   string
 	Type  string
@@ -11,12 +10,15 @@ type Operation struct {
 	Key   string
 	Type  string
 	Value string
+
+	Option map[string]string
 }
 
-type Option struct {
+type Http struct {
 	Cookie string
 	Proxy  string
 }
+
 type Replace struct {
 	Target string
 	From   string
@@ -35,7 +37,7 @@ type After struct {
 }
 
 type Before struct {
-	Option  Option
+	Http    Http
 	Replace Replace
 }
 
