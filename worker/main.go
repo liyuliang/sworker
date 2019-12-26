@@ -13,6 +13,7 @@ var returnData map[string]interface{}
 func TempData() map[string]interface{} {
 	return tempData
 }
+
 func ReturnData() map[string]interface{} {
 	return returnData
 }
@@ -24,6 +25,17 @@ func setTempData(k string, v interface{}) {
 	} else {
 		tempData[k] = v
 	}
+}
+func getTempData(k string) interface{} {
+
+	if k == "" {
+		return nil
+	}
+	_, exist := tempData[k]
+	if exist {
+		return tempData[k]
+	}
+	return nil
 }
 
 func getTempTarget(a configmodel.Action) interface{} {

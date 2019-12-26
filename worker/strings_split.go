@@ -19,6 +19,7 @@ func (d *strings_Split) Name() string {
 }
 
 func (d *strings_Split) Do(a configmodel.Action) string {
+
 	t := getTempTarget(a)
 	if t != nil {
 
