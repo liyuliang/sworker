@@ -15,6 +15,7 @@ func init() {
 
 func Init(gateway, auth string) {
 
+	return
 	//gateway
 	api := "http://localhost:7777/api/auth?key=" + auth
 	resp := request.HttpGet(api)
