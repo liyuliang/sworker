@@ -12,7 +12,7 @@ func Start(port string) {
 	r.GET("/profile", profile)
 
 	r.NoRoute(method404)
-	r.Run(":" + port)
+	r.Run(":8888")
 }
 
 func profile(c *gin.Context) {

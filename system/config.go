@@ -2,7 +2,9 @@ package system
 
 import (
 	"github.com/liyuliang/utils/request"
-	"strings"
+	"encoding/json"
+	"encoding/base64"
+	"github.com/liyuliang/utils/format"
 )
 
 type appConfig map[string]string
@@ -15,18 +17,38 @@ func init() {
 
 func Init(gateway, auth string) {
 
-	return
+	initSystemUsed()
+	initSpiderConfig(gateway, auth)
+}
+
+func initSpiderConfig(gateway string, auth string) {
 	//gateway
-	api := "http://localhost:7777/api/auth?key=" + auth
-	resp := request.HttpGet(api)
-	if !strings.Contains(resp.Data, "success") {
-		//fmt.Fprintf(os.Stderr, "Auth failed \n")
-		//os.Exit(2)
+	resp := request.HttpGet(gateway)
+	if resp.Err != nil {
+		panic(resp.Err)
 	}
+	//if !strings.Contains(resp.Data, "success") {
+	//fmt.Fprintf(os.Stderr, "Auth failed \n")
+	//os.Exit(2)
+	//}
 
+	model := make(map[string]string)
+	json.Unmarshal([]byte(resp.Data), model)
+	for key, value := range model {
+		v, err := base64.StdEncoding.DecodeString(value)
+		if err == nil {
+			_config[key] = string(v)
+		} else {
+			panic(err)
+		}
+	}
+}
 
+func initSystemUsed() {
 
-
-
-
+	_config["system"] = GetLinuxVersion()
+	_config["core"] = format.IntToStr(GetCoreNum())
+	_config["load"] = GetLoadAverage()
+	_config["memory"] = GetMemUsage()
+	_config["disk"] = GetDiskUsage()
 }
