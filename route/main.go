@@ -21,13 +21,11 @@ func profile(c *gin.Context) {
 	data := make(map[string]string)
 	if len(conf) > 0 {
 
-		c.String(200, "from memory")
-		c.Abort()
-		//data["system"] = conf["system"]
-		//data["core"] = conf["core"]
-		//data["load"] = conf["load"]
-		//data["memory"] = conf["memory"]
-		//data["disk"] = conf["disk"]
+		data["system"] = conf["system"]
+		data["core"] = conf["core"]
+		data["load"] = conf["load"]
+		data["memory"] = conf["memory"]
+		data["disk"] = conf["disk"]
 
 	} else {
 
@@ -36,6 +34,6 @@ func profile(c *gin.Context) {
 		data["load"] = system.GetLoadAverage()
 		data["memory"] = system.GetMemUsage()
 		data["disk"] = system.GetDiskUsage()
-		c.JSON(200, data)
 	}
+	c.JSON(200, data)
 }
