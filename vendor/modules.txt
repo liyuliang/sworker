@@ -2,8 +2,6 @@
 github.com/PuerkitoBio/goquery
 # github.com/andybalholm/cascadia v1.1.0
 github.com/andybalholm/cascadia
-# github.com/astaxie/beego v1.12.0
-github.com/astaxie/beego/logs
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
 # github.com/gin-gonic/gin v1.5.0
@@ -41,8 +39,6 @@ github.com/mattn/go-isatty
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
-# github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644
-github.com/shiena/ansicolor
 # github.com/ugorji/go/codec v1.1.7
 github.com/ugorji/go/codec
 # golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553

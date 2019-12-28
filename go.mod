@@ -6,7 +6,6 @@ replace golang.org/x/sys v0.0.0-20190410235845-0ad05ae3009d => github.com/golang
 
 require (
 	github.com/andybalholm/cascadia v1.1.0 // indirect
-	github.com/astaxie/beego v1.12.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
