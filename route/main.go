@@ -2,8 +2,8 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/liyuliang/utils/format"
 	"github.com/liyuliang/sworker/system"
+	"github.com/liyuliang/utils/format"
 )
 
 func Start(port string) {
@@ -17,11 +17,25 @@ func Start(port string) {
 
 func profile(c *gin.Context) {
 
+	conf := system.Config()
 	data := make(map[string]string)
-	data["system"] = system.GetLinuxVersion()
-	data["core"] = format.IntToStr(system.GetCoreNum())
-	data["load"] = system.GetLoadAverage()
-	data["memory"] = system.GetMemUsage()
-	data["disk"] = system.GetDiskUsage()
-	c.JSON(200, data)
+	if len(conf) > 0 {
+
+		c.String(200, "from memory")
+		c.Abort()
+		//data["system"] = conf["system"]
+		//data["core"] = conf["core"]
+		//data["load"] = conf["load"]
+		//data["memory"] = conf["memory"]
+		//data["disk"] = conf["disk"]
+
+	} else {
+
+		data["system"] = system.GetLinuxVersion()
+		data["core"] = format.IntToStr(system.GetCoreNum())
+		data["load"] = system.GetLoadAverage()
+		data["memory"] = system.GetMemUsage()
+		data["disk"] = system.GetDiskUsage()
+		c.JSON(200, data)
+	}
 }
