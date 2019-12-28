@@ -35,7 +35,7 @@ func init() {
 
 	flag.StringVar(&a, "a", "", "auth token")
 	flag.StringVar(&p, "p", "8888", "web port")
-	flag.StringVar(&p, "g", "", "gateway url")
+	flag.StringVar(&g, "g", "", "gateway url")
 
 	flag.Parse()
 

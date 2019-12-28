@@ -12,16 +12,21 @@ func Start(port string) {
 	r.GET("/profile", profile)
 
 	r.NoRoute(method404)
-	r.Run(":8888")
+	r.Run(":" + port)
 }
 
 func profile(c *gin.Context) {
 
-	data := make(map[string]string)
-	data["system"] = system.GetLinuxVersion()
-	data["core"] = format.IntToStr(system.GetCoreNum())
-	data["load"] = system.GetLoadAverage()
-	data["memory"] = system.GetMemUsage()
-	data["disk"] = system.GetDiskUsage()
-	c.JSON(200, data)
+	c := system.Config()
+	if len(c) > 0 {
+
+	}else {
+		data := make(map[string]string)
+		data["system"] = system.GetLinuxVersion()
+		data["core"] = format.IntToStr(system.GetCoreNum())
+		data["load"] = system.GetLoadAverage()
+		data["memory"] = system.GetMemUsage()
+		data["disk"] = system.GetDiskUsage()
+		c.JSON(200, data)
+	}
 }
