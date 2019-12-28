@@ -2,8 +2,8 @@ package worker
 
 import (
 	"github.com/liyuliang/configmodel"
-	"github.com/astaxie/beego/logs"
 	"github.com/liyuliang/dom-parser"
+	"log"
 )
 
 func init() {
@@ -28,7 +28,7 @@ func (d *dom_parser) Do(a configmodel.Action) {
 			d, e := parser.InitDom(v)
 			if e != nil {
 
-				logs.Error(e.Error())
+				log.Println(e.Error())
 			} else {
 				setTempData(a.Operation.Key, d)
 			}

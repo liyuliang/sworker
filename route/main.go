@@ -10,6 +10,7 @@ func Start(port string) {
 
 	r := gin.Default()
 	r.GET("/profile", profile)
+	r.GET("/spider", spider)
 
 	r.NoRoute(method404)
 	r.Run(":" + port)
@@ -21,12 +22,11 @@ func profile(c *gin.Context) {
 	data := make(map[string]string)
 	if len(conf) > 0 {
 
-		data = conf
-		//data["system"] = conf["system"]
-		//data["core"] = conf["core"]
-		//data["load"] = conf["load"]
-		//data["memory"] = conf["memory"]
-		//data["disk"] = conf["disk"]
+		data["system"] = conf["system"]
+		data["core"] = conf["core"]
+		data["load"] = conf["load"]
+		data["memory"] = conf["memory"]
+		data["disk"] = conf["disk"]
 
 	} else {
 
@@ -37,4 +37,8 @@ func profile(c *gin.Context) {
 		data["disk"] = system.GetDiskUsage()
 	}
 	c.JSON(200, data)
+}
+
+func spider(c *gin.Context) {
+
 }

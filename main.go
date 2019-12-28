@@ -34,8 +34,8 @@ func init() {
 	required := []string{"a", "g"}
 
 	flag.StringVar(&a, "a", "", "auth token")
-	flag.StringVar(&p, "p", "8888", "web port")
 	flag.StringVar(&g, "g", "", "gateway url")
+	flag.StringVar(&p, "p", "8888", "web port")
 
 	flag.Parse()
 
