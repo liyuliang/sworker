@@ -21,11 +21,12 @@ func profile(c *gin.Context) {
 	data := make(map[string]string)
 	if len(conf) > 0 {
 
-		data["system"] = conf["system"]
-		data["core"] = conf["core"]
-		data["load"] = conf["load"]
-		data["memory"] = conf["memory"]
-		data["disk"] = conf["disk"]
+		data = conf
+		//data["system"] = conf["system"]
+		//data["core"] = conf["core"]
+		//data["load"] = conf["load"]
+		//data["memory"] = conf["memory"]
+		//data["disk"] = conf["disk"]
 
 	} else {
 
