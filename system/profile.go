@@ -2,8 +2,8 @@ package system
 
 import (
 	"github.com/mackerelio/go-osstat/memory"
-	"fmt"
 	"github.com/mackerelio/go-osstat/cpu"
+	"fmt"
 	"os"
 	"time"
 	"runtime"
@@ -33,7 +33,7 @@ func GetLinuxVersion() (v string) {
 }
 
 //获取系统名称
-func GetOsName() string {
+func GetHostName() string {
 	name, err := os.Hostname()
 	if err == nil {
 		return name

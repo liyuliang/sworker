@@ -7,40 +7,41 @@ import (
 	"github.com/liyuliang/utils/format"
 )
 
-type appConfig map[string]string
-
-var _config appConfig
+var c format.MapData
 
 func init() {
-	_config = make(map[string]string)
+	c = format.Map()
 }
-func Config() appConfig {
-	return _config
+func Config() format.MapData {
+	return c
 }
 
-func Init(gateway, auth string) {
+func Init(data format.MapData) {
+	c = data
 
 	initSystemUsed()
-	initSpiderConfig(gateway, auth)
+	initSpiderConfig(data)
 }
 
-func initSpiderConfig(gateway string, auth string) {
-	//gateway
-	resp := request.HttpGet(gateway)
-	if resp.Err != nil {
-		panic(resp.Err)
+func initSpiderConfig(data format.MapData) {
+	gateway := data["gateway"]
+
+	if gateway == "" {
+		panic("gateway is required")
 	}
-	//if !strings.Contains(resp.Data, "success") {
-	//fmt.Fprintf(os.Stderr, "Auth failed \n")
-	//os.Exit(2)
-	//}
+
+	//gateway
+	token, err := request.HttpPost(gateway, c.ToUrlVals())
+	if err != nil {
+		panic(err)
+	}
 
 	model := make(map[string]string)
 	json.Unmarshal([]byte(resp.Data), model)
 	for key, value := range model {
 		v, err := base64.StdEncoding.DecodeString(value)
 		if err == nil {
-			_config[key] = string(v)
+			c[key] = string(v)
 		} else {
 			panic(err)
 		}
@@ -49,9 +50,10 @@ func initSpiderConfig(gateway string, auth string) {
 
 func initSystemUsed() {
 
-	_config["system"] = GetLinuxVersion()
-	_config["core"] = format.IntToStr(GetCoreNum())
-	_config["load"] = GetLoadAverage()
-	_config["memory"] = GetMemUsage()
-	_config["disk"] = GetDiskUsage()
+	c["host"] = GetHostName()
+	c["system"] = GetLinuxVersion()
+	c["core"] = format.IntToStr(GetCoreNum())
+	c["load"] = GetLoadAverage()
+	c["memory"] = GetMemUsage()
+	c["disk"] = GetDiskUsage()
 }

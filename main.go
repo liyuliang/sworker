@@ -6,6 +6,7 @@ import (
 	"flag"
 	"os"
 	"fmt"
+	"github.com/liyuliang/utils/format"
 )
 
 func main() {
@@ -19,8 +20,13 @@ func main() {
 	//if empty { next queue }
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
+	data := format.ToMap(map[string]string{
+		"gateway": g,
+		"port":    p,
+		"auth":    a,
+	})
 
-	system.Init(g, a)
+	system.Init(data)
 	route.Start(p)
 }
 
