@@ -2,34 +2,34 @@ package format
 
 import "encoding/json"
 
-type data map[string]string
+type MapData map[string]string
 
-func (mapData data) Values() (data []string) {
-	for _, value := range mapData {
+func (m MapData) Values() (data []string) {
+	for _, value := range m {
 		data = append(data, value)
 	}
 	return data
 }
 
-func (mapData data) Keys() (data []string) {
+func (m MapData) Keys() (data []string) {
 
-	for key, _ := range mapData {
+	for key, _ := range m {
 		data = append(data, key)
 	}
 	return data
 }
 
-func (mapData data) ToString() string {
-	byteData, _ := json.Marshal(mapData)
+func (m MapData) String() string {
+	byteData, _ := json.Marshal(m)
 	return string(byteData)
 }
 
-func MapData() data {
+func Map() MapData {
 	return make(map[string]string)
 }
 
-func ToMapData(params map[string]string) data {
-	mapData := MapData()
+func ToMap(params map[string]string) MapData {
+	mapData := Map()
 	for key, value := range params {
 		mapData[key] = value
 	}

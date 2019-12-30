@@ -66,6 +66,8 @@ github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec h1:v5iZhYBnqq
 github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec/go.mod h1:99eu3G1hkx+h3ii678CrfsHRmF9GyDPI8skOZ5xsMHA=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0 h1:ndAbhekvtSoyucX66sxvy9HInaG+ULXiYutd1xG6jMM=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
+github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6 h1:JaoWa46eq/VHx177uGlWw1nFgOiBBLovq8/dCIzNXys=
+github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
 github.com/mackerelio/go-osstat v0.1.0 h1:e57QHeHob8kKJ5FhcXGdzx5O6Ktuc5RHMDIkeqhgkFA=
 github.com/mackerelio/go-osstat v0.1.0/go.mod h1:1K3NeYLhMHPvzUu+ePYXtoB58wkaRpxZsGClZBJyIFw=
 github.com/mattn/go-isatty v0.0.9 h1:d5US/mDsogSGW37IV293h//ZFaeajb69h+EHFsv2xGg=

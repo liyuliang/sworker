@@ -26,7 +26,7 @@ github.com/leodido/go-urn
 github.com/liyuliang/configmodel
 # github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec
 github.com/liyuliang/dom-parser
-# github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0
+# github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6
 github.com/liyuliang/utils/format
 github.com/liyuliang/utils/regex
 github.com/liyuliang/utils/request

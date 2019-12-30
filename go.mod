@@ -13,7 +13,7 @@ require (
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/liyuliang/configmodel v1.0.1
 	github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec
-	github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0
+	github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6
 	github.com/mackerelio/go-osstat v0.1.0
 	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
