@@ -3,6 +3,7 @@ package worker
 
 import (
 	"github.com/liyuliang/configmodel"
+	"github.com/liyuliang/sworker/system"
 )
 
 
@@ -43,7 +44,7 @@ func getTempData(k string) interface{} {
 }
 
 func getTempTarget(a configmodel.Action) interface{} {
-	if a.Target.Type == "temp" {
+	if a.Target.Type == system.ActionTempPool {
 		return tempData[a.Target.Key]
 	}
 	return nil

@@ -2,6 +2,7 @@ package worker
 
 import (
 	"github.com/liyuliang/configmodel"
+	"github.com/liyuliang/sworker/system"
 )
 
 func init() {
@@ -21,7 +22,7 @@ func (d *array_prefix) Do(a configmodel.Action) {
 
 	var data interface{}
 
-	if a.Operation.Option.Type == "temp" {
+	if a.Operation.Option.Type == system.ActionTempPool {
 		data = getTempData(a.Operation.Option.Key)
 	}
 
