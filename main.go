@@ -3,10 +3,11 @@ package main
 import (
 	"github.com/liyuliang/sworker/route"
 	"github.com/liyuliang/sworker/system"
-	"flag"
-	"os"
-	"fmt"
 	"github.com/liyuliang/utils/format"
+	"github.com/liyuliang/sworker/service"
+	"fmt"
+	"os"
+	"flag"
 )
 
 func main() {
@@ -21,12 +22,17 @@ func main() {
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
 	data := format.ToMap(map[string]string{
-		"gateway": g,
-		"port":    p,
-		"auth":    a,
+		system.SystemGateway: g,
+		system.SystemPort:    p,
+		system.SystemApiAuth: a,
+		system.SecondSleep:   format.IntToStr(sleep),
+		system.MaxError:      format.IntToStr(maxError),
 	})
 
 	system.Init(data)
+
+	service.Start()
+
 	route.Start(p)
 }
 
@@ -34,6 +40,9 @@ var (
 	a string
 	p string
 	g string
+
+	maxError int
+	sleep    int
 )
 
 func init() {
@@ -42,6 +51,8 @@ func init() {
 	flag.StringVar(&a, "a", "", "auth token")
 	flag.StringVar(&g, "g", "", "gateway url")
 	flag.StringVar(&p, "p", "8888", "web port")
+	flag.IntVar(&maxError, "e", 20, "maximum number of error in an hour then downgrade queue weight")
+	flag.IntVar(&sleep, "s", 300, "queue sleep seconeds")
 
 	flag.Parse()
 

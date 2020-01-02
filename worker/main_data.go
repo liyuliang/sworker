@@ -44,7 +44,7 @@ func getTempData(k string) interface{} {
 }
 
 func getTempTarget(a configmodel.Action) interface{} {
-	if a.Target.Type == system.ActionTempPool {
+	if a.Target.Type == system.ActionTempPoolName {
 		return tempData[a.Target.Key]
 	}
 	return nil

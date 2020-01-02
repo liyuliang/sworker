@@ -22,7 +22,7 @@ func (d *array_prefix) Do(a configmodel.Action) {
 
 	var data interface{}
 
-	if a.Operation.Option.Type == system.ActionTempPool {
+	if a.Operation.Option.Type == system.ActionTempPoolName {
 		data = getTempData(a.Operation.Option.Key)
 	}
 

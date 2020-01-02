@@ -1,9 +1,23 @@
 package system
 
 var (
-	AuthApiPath = "/auth"
-	TplApiPath  = "/tpl"
-	Method404Code = "NOT_FOUND"
-	Method404Msg = "Not found"
-	ActionTempPool = "temp"
+	AuthApiPath    = "/auth"
+	ListApiPath    = "/queue"
+	GetApiPath    = "/get"
+	TplApiPath     = "/tpl"
+
+	Method404Code  = "NOT_FOUND"
+	Method404Msg   = "Not found"
+
+	ActionTempPoolName = "temp"
+	SecondSleep = "sleep"
+	MaxError = "max_error"
+
+	SystemGateway = "gateway"
+	SystemPort    = "port"
+	SystemApiAuth = "auth"
+	SystemToken = "token"
+
+
+
 )

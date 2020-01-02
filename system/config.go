@@ -7,6 +7,7 @@ import (
 	"github.com/liyuliang/utils/format"
 	"github.com/liyuliang/utils/regex"
 	"log"
+	"time"
 )
 
 var c format.MapData
@@ -18,6 +19,11 @@ func Config() format.MapData {
 	return c
 }
 
+func SetConfig(key, val string) format.MapData {
+	v := Config()
+	v[key] = val
+	return v
+}
 func Init(data format.MapData) {
 	c = data
 
@@ -26,7 +32,7 @@ func Init(data format.MapData) {
 }
 
 func initSpiderConfig(data format.MapData) {
-	gateway := data["gateway"]
+	gateway := data[SystemGateway]
 
 	if gateway == "" {
 		panic("gateway is required")
@@ -40,7 +46,7 @@ func initSpiderConfig(data format.MapData) {
 	}
 
 	token := regex.Get(resp, `"uuid":"([^\"]+)"`)
-	c["token"] = token
+	c[SystemToken] = token
 
 	log.Print(token)
 
@@ -68,6 +74,7 @@ func initSpiderConfig(data format.MapData) {
 
 func initSystemUsed() {
 
+	c["start"] = time.Now().String()
 	c["host"] = GetHostName()
 	c["system"] = GetLinuxVersion()
 	c["core"] = format.IntToStr(GetCoreNum())

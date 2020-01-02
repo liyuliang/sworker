@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func Run(a configmodel.Action) {
+func Run(a configmodel.Action) Result {
 
 	if a.Target.Value != "" {
 		setTempData(a.Target.Key, a.Target.Value)
