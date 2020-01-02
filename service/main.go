@@ -1,13 +1,13 @@
 package service
 
 import (
-	"queue-services"
 	"github.com/liyuliang/sworker/system"
-	"encoding/json"
-	"github.com/liyuliang/utils/request"
 	"github.com/liyuliang/sworker/worker"
-	"time"
+	"github.com/liyuliang/utils/request"
 	"github.com/liyuliang/utils/format"
+	"encoding/json"
+	"queue-services"
+	"time"
 	"log"
 )
 
@@ -19,23 +19,34 @@ func Start() {
 		pullFromQueue()
 		return
 	})
+
+	services.AddSingleProcessTask("Restore Queue Weight", func(workerNum int) (err error) {
+		restoreQueueWeight()
+		return
+	})
+}
+
+func restoreQueueWeight() {
+	qs := system.Queues()
+	for _, q := range qs.Pool() {
+		if q.Weight() < 1 {
+			q.NaturalRestore()
+		}
+	}
 }
 
 func pullFromQueue() {
-
-	//gateway := system.Config()[system.SystemGateway]
-	//queueGetApi := gateway + system.GetApiPath
 
 	qs := system.Queues()
 
 	if qs.Count() == 0 {
 
-		//		1.发现执行失败超过阀值(时间段内超过阀值)
-		//		2.队列为空
-
+		//全部队列为空
 		pending()
 
 	} else {
+		//		1.发现执行失败超过阀值(时间段内超过阀值)
+		//		2.队列为空
 
 		for _, q := range qs.Pool() {
 
@@ -43,41 +54,37 @@ func pullFromQueue() {
 
 			if len(jobs) == 0 {
 
-				q.Downgrade(-1)
+				q.ResetWeight()
+				q.Downgrade10min()
 				continue
 			}
 
-			//jobs := pullJobs(q.Name)
-
 			for _, job := range jobs {
 
-				result := worker.Run(job)
+				resp := worker.Run(job)
 
-				if result.Code() < 1 {
-					q.Downgrade(result.Code())
+				switch resp.StatusCode() {
+
+				case 200:
+
+					//Do nothing
+				case 403:
+					q.ResetWeight()
+					q.Downgrade60min()
+
+				default:
+					q.Downgrade10min()
 				}
+
 			}
 		}
 	}
 }
 
 func pending() {
-	sleep := format.StrToInt(system.SecondSleep)
-	log.Printf("Empty queue, wait %d second", sleep)
+	sleep := system.SecondSleep
+	log.Printf("Empty queue, wait %d second", system.SecondSleep)
 	time.Sleep(format.IntToTimeSecond(sleep))
-}
-
-func downgrade(queue string, r worker.Result) {
-
-	//
-	switch r.Code() {
-
-	case 0:
-
-		queue.offline()
-	default:
-		queue.downgrade(r.Code())
-	}
 }
 
 func initQueue() {
