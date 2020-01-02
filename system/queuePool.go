@@ -6,6 +6,8 @@ import (
 	"time"
 	"strings"
 	"sort"
+	"github.com/liyuliang/utils/request"
+	"encoding/json"
 )
 
 type queues struct {
@@ -13,8 +15,8 @@ type queues struct {
 }
 
 type queue struct {
-	Name            string
-	weight          int
+	Name   string
+	weight int
 	//pendingWeight   int
 	//errorCount      int
 	//lastErrorTime   time.Time
@@ -29,10 +31,22 @@ func (q *queue) Weight() int {
 	return q.weight
 }
 
-func (q *queue) PullJobs() []configmodel.Action {
+func (q *queue) PullJobs() (jobs []configmodel.Action) {
 
-	//gateway := system.Config()[system.SystemGateway]
-	//queueGetApi := gateway + system.GetApiPath
+	gateway := Config()[SystemGateway]
+	queueGetApi := gateway + GetApiPath
+
+	html, err := request.HttpPost(queueGetApi, format.ToMap(map[string]string{
+		"queue": q.Name,
+	}).ToUrlVals())
+
+	if err != nil {
+		return
+	}
+	var urls []string
+	json.Unmarshal([]byte(html), &urls)
+
+
 
 	return []configmodel.Action{}
 }
@@ -81,7 +95,6 @@ func (q *queue) Online() bool {
 func (q *queue) ResetWeight() {
 	q.weight = 0
 }
-
 
 type pool []*queue
 

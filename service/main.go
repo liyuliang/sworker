@@ -59,6 +59,7 @@ func pullFromQueue() {
 				continue
 			}
 
+			stopJobs := false
 			for _, job := range jobs {
 
 				resp := worker.Run(job)
@@ -72,17 +73,21 @@ func pullFromQueue() {
 					q.ResetWeight()
 					q.Downgrade60min()
 
+					stopJobs = true
 				default:
 					q.Downgrade10min()
 				}
 
+				if stopJobs {
+					break
+				}
 			}
 		}
 	}
 }
 
 func pending() {
-	sleep := system.SecondSleep
+	sleep := 60 * 5
 	log.Printf("Empty queue, wait %d second", system.SecondSleep)
 	time.Sleep(format.IntToTimeSecond(sleep))
 }

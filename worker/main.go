@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func Run(a configmodel.Action) Result {
+func Run(a configmodel.Action) (r Result) {
 
 	if a.Target.Value != "" {
 		setTempData(a.Target.Key, a.Target.Value)
@@ -14,7 +14,8 @@ func Run(a configmodel.Action) Result {
 	w := Get(a.Operation.Type)
 	if w == nil {
 		log.Printf("worker %s is missing from operation type", a.Operation.Type)
-		return
+		r.statusCode = 403
+		return r
 	}
 	log.Printf("worker %s prepare run", w().Name())
 	w().Do(a)

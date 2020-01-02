@@ -10,11 +10,13 @@ var (
 	Method404Msg  = "Not found"
 
 	ActionTempPoolName = "temp"
-	SecondSleep        = 60 * 5
 	MaxError           = "max_error"
+	SecondSleep        = "sleep"
 
 	SystemGateway = "gateway"
 	SystemPort    = "port"
 	SystemApiAuth = "auth"
 	SystemToken   = "token"
 )
+
+var ()
