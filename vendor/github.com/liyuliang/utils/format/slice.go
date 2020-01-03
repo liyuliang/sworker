@@ -1,5 +1,7 @@
 package format
 
+import "math"
+
 func SliceDelDuplicate(slice []string) []string {
 	result := make([]string, 0, len(slice))
 
@@ -22,4 +24,23 @@ func InArray(items []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func SliceChunk(slice []string, size int) (data [][]string) {
+
+	l := len(slice)
+	groupLen := int(math.Ceil(float64(l/size))) + 1
+
+	for i := 0; i < groupLen; i++ {
+
+		start := i * size
+		end := start + size
+
+		var newSlice []string
+
+		newSlice = slice[start:end]
+
+		data = append(data, newSlice)
+	}
+	return data
 }
