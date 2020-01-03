@@ -45,6 +45,12 @@ func (d *download) Do(a configmodel.Action) {
 
 	resp := request.HttpGet(a.Target.Value)
 
+	statusCode = resp.StatusCode
+
+	if resp.StatusCode != 200 {
+		return
+	}
+
 	v := resp.Data
 	if a.After.Transform.Target == "gbk" {
 		v = gbkToUtf8(v)
@@ -58,6 +64,7 @@ func (d *download) Do(a configmodel.Action) {
 
 	setTempData(a.Target.Key, a.Target.Value)
 	setTempData(a.Operation.Key, v)
+	return
 }
 
 func gbkToUtf8(text string) string {

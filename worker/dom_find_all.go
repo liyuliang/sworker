@@ -19,7 +19,7 @@ func (d *dom_find_all) Name() string {
 	return "dom_find_all"
 }
 
-func (d *dom_find_all) Do(a configmodel.Action) {
+func (d *dom_find_all) Do(a configmodel.Action)  {
 
 	var data []string
 
@@ -46,4 +46,5 @@ func (d *dom_find_all) Do(a configmodel.Action) {
 			setTempData(a.Operation.Key, data)
 		}
 	}
+	return
 }

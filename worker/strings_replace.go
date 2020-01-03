@@ -18,7 +18,7 @@ func (d *strings_replace) Name() string {
 	return "strings_replace"
 }
 
-func (d *strings_replace) Do(a configmodel.Action) {
+func (d *strings_replace) Do(a configmodel.Action)  {
 
 	t := getTempTarget(a)
 	if t != nil {
@@ -32,4 +32,5 @@ func (d *strings_replace) Do(a configmodel.Action) {
 			}
 		}
 	}
+	return
 }

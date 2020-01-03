@@ -18,7 +18,7 @@ func (d *strings_Split) Name() string {
 	return "strings_split"
 }
 
-func (d *strings_Split) Do(a configmodel.Action) {
+func (d *strings_Split) Do(a configmodel.Action)  {
 
 	t := getTempTarget(a)
 	if t != nil {
@@ -29,4 +29,5 @@ func (d *strings_Split) Do(a configmodel.Action) {
 			setTempData(a.Operation.Key, vals)
 		}
 	}
+	return
 }

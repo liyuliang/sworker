@@ -6,9 +6,12 @@ import (
 	"github.com/liyuliang/utils/request"
 	"github.com/liyuliang/utils/format"
 	"encoding/json"
-	"queue-services"
 	"time"
 	"log"
+	"github.com/liyuliang/configmodel"
+	"github.com/BurntSushi/toml"
+	"fmt"
+	"github.com/liyuliang/queue-services"
 )
 
 func Start() {
@@ -24,6 +27,7 @@ func Start() {
 		restoreQueueWeight()
 		return
 	})
+	services.Service().Start(false)
 }
 
 func restoreQueueWeight() {
@@ -39,20 +43,22 @@ func pullFromQueue() {
 
 	qs := system.Queues()
 
+	for _, p := range qs.Pool() {
+		log.Println(p.Name)
+	}
+
 	if qs.Count() == 0 {
 
 		//全部队列为空
 		pending()
 
 	} else {
-		//		1.发现执行失败超过阀值(时间段内超过阀值)
-		//		2.队列为空
 
 		for _, q := range qs.Pool() {
 
-			jobs := q.PullJobs()
+			tasks := q.PullTasks()
 
-			if len(jobs) == 0 {
+			if len(tasks) == 0 {
 
 				q.ResetWeight()
 				q.Downgrade10min()
@@ -60,12 +66,22 @@ func pullFromQueue() {
 			}
 
 			stopJobs := false
-			for _, job := range jobs {
+			for _, t := range tasks {
 
-				resp := worker.Run(job)
+				jobs := genJobs(q.Name, t)
 
-				switch resp.StatusCode() {
+				worker.Clean()
 
+				for _, job := range jobs {
+					worker.Run(job)
+				}
+
+				data := worker.ReturnData()
+
+				fmt.Print(data)
+				switch worker.StatusCode() {
+
+				case 0:
 				case 200:
 
 					//Do nothing
@@ -85,10 +101,27 @@ func pullFromQueue() {
 		}
 	}
 }
+func genJobs(queueName string, task system.Task) (as []configmodel.Action) {
+	tpl := system.Config()[queueName]
+	model := new(configmodel.Actions)
+	_, err := toml.Decode(tpl, model)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+
+	for i, a := range model.Action {
+		if a.Target.Key == "ur" && a.Operation.Type == "download" {
+			model.Action[i].Target.Value = task.Url
+		}
+	}
+	as = model.Action
+	return as
+}
 
 func pending() {
 	sleep := 60 * 5
-	log.Printf("Empty queue, wait %d second", system.SecondSleep)
+	log.Printf("Empty queue, wait %d second", sleep)
 	time.Sleep(format.IntToTimeSecond(sleep))
 }
 
@@ -112,5 +145,4 @@ func initQueue() {
 
 		q.Get(queueName).SetWeight(format.StrToInt(count))
 	}
-
 }

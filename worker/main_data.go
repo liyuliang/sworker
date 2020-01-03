@@ -1,18 +1,23 @@
 package worker
 
-
 import (
 	"github.com/liyuliang/configmodel"
 	"github.com/liyuliang/sworker/system"
 )
 
-
 var tempData map[string]interface{}
 var returnData map[string]interface{}
+var statusCode int
 
 func init() {
+	Clean()
+}
+
+func Clean() {
+
 	tempData = make(map[string]interface{})
 	returnData = make(map[string]interface{})
+	statusCode = 0
 }
 
 func TempData() map[string]interface{} {
@@ -21,6 +26,10 @@ func TempData() map[string]interface{} {
 
 func ReturnData() map[string]interface{} {
 	return returnData
+}
+
+func StatusCode() int {
+	return statusCode
 }
 
 func setTempData(k string, v interface{}) {
@@ -65,4 +74,3 @@ func setReturnData(k string, v interface{}) {
 func replaceReturnData(k string, v interface{}) {
 	returnData[k] = v
 }
-

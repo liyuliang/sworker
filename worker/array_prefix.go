@@ -47,4 +47,5 @@ func (d *array_prefix) Do(a configmodel.Action) {
 			replaceTempData(a.Target.Key, newArr)
 		}
 	}
+	return
 }

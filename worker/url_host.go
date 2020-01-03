@@ -19,7 +19,7 @@ func (d *url_host) Name() string {
 	return "url_host"
 }
 
-func (d *url_host) Do(a configmodel.Action) {
+func (d *url_host) Do(a configmodel.Action)  {
 	t := getTempTarget(a)
 	if t != nil {
 		s, ok := t.(string)
@@ -31,4 +31,5 @@ func (d *url_host) Do(a configmodel.Action) {
 			}
 		}
 	}
+	return
 }

@@ -1,13 +1,13 @@
 package system
 
 import (
-	"github.com/liyuliang/configmodel"
 	"github.com/liyuliang/utils/format"
 	"time"
 	"strings"
 	"sort"
 	"github.com/liyuliang/utils/request"
 	"encoding/json"
+	"log"
 )
 
 type queues struct {
@@ -31,24 +31,36 @@ func (q *queue) Weight() int {
 	return q.weight
 }
 
-func (q *queue) PullJobs() (jobs []configmodel.Action) {
+func (q *queue) PullTasks() (tasks []Task) {
 
 	gateway := Config()[SystemGateway]
 	queueGetApi := gateway + GetApiPath
 
-	html, err := request.HttpPost(queueGetApi, format.ToMap(map[string]string{
+	data := format.ToMap(map[string]string{
 		"queue": q.Name,
-	}).ToUrlVals())
+	})
+	html, err := request.HttpPost(queueGetApi, data.ToUrlVals())
 
 	if err != nil {
 		return
 	}
+	log.Println("task response:")
+	log.Println(queueGetApi,data.String() )
+	log.Print(html)
 	var urls []string
 	json.Unmarshal([]byte(html), &urls)
 
+	for _, u := range urls {
+		log.Println(u)
+		if u != "" {
+			t := Task{
+				Url: u,
+			}
+			tasks = append(tasks, t)
+		}
+	}
 
-
-	return []configmodel.Action{}
+	return tasks
 }
 
 func (q *queue) Downgrade10min() {

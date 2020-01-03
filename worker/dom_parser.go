@@ -20,7 +20,7 @@ func (d *dom_parser) Name() string {
 	return "dom_parser"
 }
 
-func (d *dom_parser) Do(a configmodel.Action) {
+func (d *dom_parser) Do(a configmodel.Action)  {
 	t := getTempTarget(a)
 	if t != nil {
 		v, ok := t.(string)
@@ -34,4 +34,5 @@ func (d *dom_parser) Do(a configmodel.Action) {
 			}
 		}
 	}
+	return
 }

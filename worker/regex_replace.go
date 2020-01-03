@@ -17,8 +17,9 @@ func (d *regex_replace) Name() string {
 	return "regex_replace"
 }
 
-func (d *regex_replace) Do(a configmodel.Action) {
+func (d *regex_replace) Do(a configmodel.Action)  {
 
 	//TODO
 	//getTempTarget()
+	return
 }

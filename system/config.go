@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"github.com/liyuliang/utils/format"
 	"github.com/liyuliang/utils/regex"
-	"log"
 	"time"
 )
 
@@ -48,24 +47,18 @@ func initSpiderConfig(data format.MapData) {
 	token := regex.Get(resp, `"uuid":"([^\"]+)"`)
 	c[SystemToken] = token
 
-	log.Print(token)
-
 	tplsApi := gateway + TplApiPath
 	tpls, err := request.HttpPost(tplsApi, c.ToUrlVals())
-
-	log.Print(tpls)
 
 	model := make(map[string]string)
 	json.Unmarshal([]byte(tpls), &model)
 	for key, value := range model {
 		c[key] = string(value)
-		log.Print(key)
 		continue
 		v, err := base64.StdEncoding.DecodeString(value)
 		if err == nil {
 			c[key] = string(v)
 
-			log.Print(key)
 		} else {
 			panic(err)
 		}

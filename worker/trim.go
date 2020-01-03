@@ -18,7 +18,7 @@ func (d *trim) Name() string {
 	return "trim"
 }
 
-func (d *trim) Do(a configmodel.Action) {
+func (d *trim) Do(a configmodel.Action)  {
 
 	t := getTempTarget(a)
 	if t != nil {
@@ -32,4 +32,5 @@ func (d *trim) Do(a configmodel.Action) {
 			}
 		}
 	}
+	return
 }
