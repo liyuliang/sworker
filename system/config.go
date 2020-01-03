@@ -52,9 +52,9 @@ func initSpiderConfig(data format.MapData) {
 
 	model := make(map[string]string)
 	json.Unmarshal([]byte(tpls), &model)
+
 	for key, value := range model {
-		c[key] = string(value)
-		continue
+
 		v, err := base64.StdEncoding.DecodeString(value)
 		if err == nil {
 			c[key] = string(v)

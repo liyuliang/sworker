@@ -1,6 +1,9 @@
 package system
 
 var (
+	QueuePrefix      = "queue_"
+	QueueTotalPrefix = "total_"
+
 	AuthApiPath = "/auth"
 	ListApiPath = "/queue"
 	GetApiPath  = "/get"
@@ -19,4 +22,3 @@ var (
 	SystemToken   = "token"
 )
 
-var ()

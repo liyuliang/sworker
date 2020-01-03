@@ -38,6 +38,7 @@ func (q *queue) PullTasks() (tasks []Task) {
 
 	data := format.ToMap(map[string]string{
 		"queue": q.Name,
+		"n":     "1",
 	})
 	html, err := request.HttpPost(queueGetApi, data.ToUrlVals())
 
@@ -45,8 +46,8 @@ func (q *queue) PullTasks() (tasks []Task) {
 		return
 	}
 	log.Println("task response:")
-	log.Println(queueGetApi,data.String() )
-	log.Print(html)
+	log.Println(queueGetApi, data.String())
+
 	var urls []string
 	json.Unmarshal([]byte(html), &urls)
 

@@ -12,6 +12,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"fmt"
 	"github.com/liyuliang/queue-services"
+	"strings"
 )
 
 func Start() {
@@ -68,12 +69,13 @@ func pullFromQueue() {
 			stopJobs := false
 			for _, t := range tasks {
 
-				jobs := genJobs(q.Name, t)
+				actions := genActions(q.Name, t)
 
+				log.Println("Action count:", len(actions))
 				worker.Clean()
 
-				for _, job := range jobs {
-					worker.Run(job)
+				for _, a := range actions {
+					worker.Run(a)
 				}
 
 				data := worker.ReturnData()
@@ -101,16 +103,23 @@ func pullFromQueue() {
 		}
 	}
 }
-func genJobs(queueName string, task system.Task) (as []configmodel.Action) {
+func genActions(queueName string, task system.Task) (as []configmodel.Action) {
+	queueName = strings.Replace(queueName, system.QueuePrefix, "", -1)
+
+	log.Println("queuename:", queueName)
+
 	tpl := system.Config()[queueName]
+	log.Print(tpl)
 	model := new(configmodel.Actions)
-	_, err := toml.Decode(tpl, model)
+	_, err := toml.Decode(tpl, &model)
+
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
 
 	for i, a := range model.Action {
+		log.Println("Action ", i)
 		if a.Target.Key == "ur" && a.Operation.Type == "download" {
 			model.Action[i].Target.Value = task.Url
 		}
