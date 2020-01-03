@@ -8,7 +8,7 @@ import (
 
 func UrlDecode(url string) (string, error) {
 	if url == "" {
-		return "", errors.New("Url decode miss argument url")
+		return "", errors.New("Url decode miss argument u")
 	}
 
 	url, err := URL.QueryUnescape(url)

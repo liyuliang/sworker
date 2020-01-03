@@ -30,7 +30,7 @@ github.com/liyuliang/configmodel
 github.com/liyuliang/dom-parser
 # github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c
 github.com/liyuliang/queue-services
-# github.com/liyuliang/utils v0.0.0-20191230153143-fe180d04d4af
+# github.com/liyuliang/utils v0.0.0-20200103151605-6579228c2ea7
 github.com/liyuliang/utils/format
 github.com/liyuliang/utils/regex
 github.com/liyuliang/utils/request
