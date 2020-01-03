@@ -1,3 +1,4 @@
+github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Knetic/govaluate v3.0.0+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/OwnLocal/goes v1.0.0/go.mod h1:8rIFjBGTue3lCU0wplczcUgt9Gxgrkkrw7etMIcn8TM=
@@ -64,6 +65,8 @@ github.com/liyuliang/configmodel v1.0.1 h1:U/IBe7jfLXU7a2SQk41Wf8ImM3pujNqq7qu42
 github.com/liyuliang/configmodel v1.0.1/go.mod h1:BdDpqFP9gmTgooHTF6aAb/ZOXF2f6fKK7ClLgfIvnAw=
 github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec h1:v5iZhYBnqqLbGsopm0MnbknXgyyrpNB5PBwvYsWlr4E=
 github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec/go.mod h1:99eu3G1hkx+h3ii678CrfsHRmF9GyDPI8skOZ5xsMHA=
+github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c h1:SulafnTQnAbS5eouhbJgaHbosQkpcPFZbgAo3v+b2sw=
+github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c/go.mod h1:DJG1suDA+CugYR1kT7J0xELJVMoqO4pzNyt0Uye/VWc=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0 h1:ndAbhekvtSoyucX66sxvy9HInaG+ULXiYutd1xG6jMM=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
 github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6 h1:JaoWa46eq/VHx177uGlWw1nFgOiBBLovq8/dCIzNXys=
