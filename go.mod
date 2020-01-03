@@ -15,7 +15,7 @@ require (
 	github.com/liyuliang/configmodel v1.0.1
 	github.com/liyuliang/dom-parser v0.0.0-20171020101219-83d71ce6d1ec
 	github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c
-	github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6
+	github.com/liyuliang/utils v0.0.0-20191230153143-fe180d04d4af
 	github.com/mackerelio/go-osstat v0.1.0
 	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

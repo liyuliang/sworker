@@ -1,6 +1,9 @@
 package format
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"net/url"
+)
 
 type MapData map[string]string
 
@@ -34,4 +37,12 @@ func ToMap(params map[string]string) MapData {
 		mapData[key] = value
 	}
 	return mapData
+}
+
+func (m MapData) ToUrlVals() url.Values {
+	v := url.Values{}
+	for key, val := range m {
+		v.Add(key, val)
+	}
+	return v
 }
