@@ -44,10 +44,6 @@ func pullFromQueue() {
 
 	qs := system.Queues()
 
-	for _, p := range qs.Pool() {
-		log.Println(p.Name)
-	}
-
 	if qs.Count() == 0 {
 
 		//全部队列为空
@@ -106,10 +102,7 @@ func pullFromQueue() {
 func genActions(queueName string, task system.Task) (as []configmodel.Action) {
 	queueName = strings.Replace(queueName, system.QueuePrefix, "", -1)
 
-	log.Println("queuename:", queueName)
-
 	tpl := system.Config()[queueName]
-	log.Print(tpl)
 	model := new(configmodel.Actions)
 	_, err := toml.Decode(tpl, &model)
 
@@ -119,7 +112,6 @@ func genActions(queueName string, task system.Task) (as []configmodel.Action) {
 	}
 
 	for i, a := range model.Action {
-		log.Println("Action ", i)
 		if a.Target.Key == "ur" && a.Operation.Type == "download" {
 			model.Action[i].Target.Value = task.Url
 		}
@@ -129,7 +121,7 @@ func genActions(queueName string, task system.Task) (as []configmodel.Action) {
 }
 
 func pending() {
-	sleep := 60 * 5
+	sleep := system.EmptyQueueWait
 	log.Printf("Empty queue, wait %d second", sleep)
 	time.Sleep(format.IntToTimeSecond(sleep))
 }

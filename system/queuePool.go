@@ -45,14 +45,11 @@ func (q *queue) PullTasks() (tasks []Task) {
 	if err != nil {
 		return
 	}
-	log.Println("task response:")
-	log.Println(queueGetApi, data.String())
 
 	var urls []string
 	json.Unmarshal([]byte(html), &urls)
 
 	for _, u := range urls {
-		log.Println(u)
 		if u != "" {
 			t := Task{
 				Url: u,

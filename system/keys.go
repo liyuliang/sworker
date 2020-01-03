@@ -22,3 +22,6 @@ var (
 	SystemToken   = "token"
 )
 
+var (
+	EmptyQueueWait = 60 * 5
+)
