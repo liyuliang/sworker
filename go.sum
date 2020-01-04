@@ -69,8 +69,8 @@ github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c h1:Sulafn
 github.com/liyuliang/queue-services v0.0.0-20190730061548-a92fbb43f67c/go.mod h1:DJG1suDA+CugYR1kT7J0xELJVMoqO4pzNyt0Uye/VWc=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0 h1:ndAbhekvtSoyucX66sxvy9HInaG+ULXiYutd1xG6jMM=
 github.com/liyuliang/utils v0.0.0-20190805150857-cdeb9c4f8ad0/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
-github.com/liyuliang/utils v0.0.0-20200103151605-6579228c2ea7 h1:slnGJEf1psalDp+9jy+ElF4AwACprI9UiapHgQ6s3fA=
-github.com/liyuliang/utils v0.0.0-20200103151605-6579228c2ea7/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
+github.com/liyuliang/utils v0.0.0-20200103153330-59936827755f h1:2evjUHLyF0cF0aDK6kAjr63q5b4DNAOA9bhyZUY9SbE=
+github.com/liyuliang/utils v0.0.0-20200103153330-59936827755f/go.mod h1:yikr5bbKTPLuTDzSv97YE1ZF6D178Bs7fFj2YRY5NSk=
 github.com/mackerelio/go-osstat v0.1.0 h1:e57QHeHob8kKJ5FhcXGdzx5O6Ktuc5RHMDIkeqhgkFA=
 github.com/mackerelio/go-osstat v0.1.0/go.mod h1:1K3NeYLhMHPvzUu+ePYXtoB58wkaRpxZsGClZBJyIFw=
 github.com/mattn/go-isatty v0.0.9 h1:d5US/mDsogSGW37IV293h//ZFaeajb69h+EHFsv2xGg=

@@ -26,7 +26,7 @@ func InArray(items []string, item string) bool {
 	return false
 }
 
-func SliceChunk(slice []string, size int) (data [][]string) {
+func SliceChunk(slice []interface{}, size int) (data [][]interface{}) {
 
 	l := len(slice)
 	groupLen := int(math.Ceil(float64(l/size))) + 1
@@ -36,7 +36,7 @@ func SliceChunk(slice []string, size int) (data [][]string) {
 		start := i * size
 		end := start + size
 
-		var newSlice []string
+		var newSlice []interface{}
 
 		newSlice = slice[start:end]
 
