@@ -10,9 +10,9 @@ import (
 	"log"
 	"github.com/liyuliang/configmodel"
 	"github.com/BurntSushi/toml"
-	"fmt"
 	"github.com/liyuliang/queue-services"
 	"strings"
+	"math"
 )
 
 func Start() {
@@ -26,6 +26,11 @@ func Start() {
 
 	services.AddSingleProcessTask("Restore Queue Weight", func(workerNum int) (err error) {
 		restoreQueueWeight()
+		return
+	})
+
+	services.AddSingleProcessTask("Report self profile", func(workerNum int) (err error) {
+		//TODO report profile to update token
 		return
 	})
 	services.Service().Start(false)
@@ -62,43 +67,77 @@ func pullFromQueue() {
 				continue
 			}
 
-			stopJobs := false
+			var taskResult []worker.Data
+			var extendResult []worker.Data
+
 			for _, t := range tasks {
 
 				actions := genActions(q.Name, t)
 
-				log.Println("Action count:", len(actions))
+				if len(actions) == 0 {
+					continue
+				}
+
 				worker.Clean()
 
 				for _, a := range actions {
 					worker.Run(a)
 				}
 
-				data := worker.ReturnData()
+				q.ChangeWeightByStatusCode(worker.StatusCode())
 
-				fmt.Print(data)
-				switch worker.StatusCode() {
 
-				case 0:
-				case 200:
+				result := worker.ReturnData()
+				taskResult = append(taskResult, result)
 
-					//Do nothing
-				case 403:
-					q.ResetWeight()
-					q.Downgrade60min()
 
-					stopJobs = true
-				default:
-					q.Downgrade10min()
-				}
+				extend := worker.NewData()
+				extendResult = append(extendResult, extend)
+			}
 
-				if stopJobs {
-					break
-				}
+			if len(taskResult) > 0 {
+				Submit(taskResult)
+			}
+
+			if len(extendResult) > 0 {
+				Submit(extendResult)
 			}
 		}
 	}
 }
+
+func Submit(data []worker.Data) {
+
+	gateway := system.Config()[system.SystemGateway]
+	queueSubmitApi := gateway + system.SubmitApiPath
+
+	chunk := sliceChunk(data, 10)
+
+	for _, slice := range chunk {
+
+		for _, actions := range slice {
+
+			request.HttpPost(queueSubmitApi, actions.ToUrlVals())
+		}
+	}
+}
+
+func Extend(data []worker.Data) {
+	gateway := system.Config()[system.SystemGateway]
+
+	queueAddApi := gateway + system.AddApiPath
+
+	chunk := sliceChunk(data, 10)
+
+	for _, slice := range chunk {
+
+		for _, actions := range slice {
+
+			request.HttpPost(queueAddApi, actions.ToUrlVals())
+		}
+	}
+}
+
 func genActions(queueName string, task system.Task) (as []configmodel.Action) {
 	queueName = strings.Replace(queueName, system.QueuePrefix, "", -1)
 
@@ -138,12 +177,34 @@ func initQueue() {
 
 	q := system.Queues()
 
-	//{
-	//    "queue_list_gufengmh8": "12"
-	//}
-
 	for queueName, count := range data {
 
 		q.Get(queueName).SetWeight(format.StrToInt(count))
 	}
+}
+
+func sliceChunk(data []worker.Data, size int) (result [][]worker.Data) {
+
+	l := len(data)
+	if l < size {
+		result = append(result, data)
+		return result
+	}
+
+	groupLen := int(math.Ceil(float64(l/size))) + 1
+
+	for i := 0; i < groupLen; i++ {
+
+		start := i * size
+		end := start + size
+		var newSlice []worker.Data
+
+		log.Println(len(data))
+		log.Println(start)
+		log.Println(end)
+		newSlice = data[start:end]
+
+		result = append(result, newSlice)
+	}
+	return result
 }

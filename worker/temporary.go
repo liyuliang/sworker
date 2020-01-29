@@ -4,17 +4,18 @@ import "github.com/liyuliang/configmodel"
 
 func init() {
 	Register(func() worker {
-		return new(tempoary)
+		return new(temporary)
 	})
-
 }
 
-type tempoary struct {
+type temporary struct {
 }
 
-func (d *tempoary) Name() string {
-	return "tempoary"
+func (d *temporary) Name() string {
+	return "temporary"
 }
 
-func (d *tempoary) Do(a configmodel.Action) {
+func (d *temporary) Do(a configmodel.Action) {
+
+	setTempData(a.Operation.Key, a.Operation.Value)
 }

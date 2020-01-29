@@ -48,18 +48,14 @@ func profile(c *gin.Context) {
 func spider(c *gin.Context) {
 
 	u := "https://www.gufengmh8.com/manhua/bailianchengshen/"
-	tpl := system.Config()["gufeng8-list"]
+	tpl := system.Config()["gufengmh8_list"]
 
-	log.Print(system.Config())
-	log.Print(tpl)
 	model := new(configmodel.Actions)
 	_, err := toml.Decode(tpl, model)
 	if err != nil {
 		println(err.Error())
 		os.Exit(-1)
 	}
-
-	log.Print(len(model.Action))
 
 	for i, a := range model.Action {
 		if a.Target.Key == "ur" && a.Operation.Type == "download" {
@@ -70,7 +66,10 @@ func spider(c *gin.Context) {
 		worker.Run(a)
 	}
 
-	c.JSON(200, worker.ReturnData())
+	data := worker.ReturnData()
+
+	data.ToUrlVals()
+	c.JSON(200, data)
 
 }
 

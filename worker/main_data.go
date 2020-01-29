@@ -3,10 +3,41 @@ package worker
 import (
 	"github.com/liyuliang/configmodel"
 	"github.com/liyuliang/sworker/system"
+	"github.com/liyuliang/utils/format"
+	"reflect"
+	"net/url"
 )
 
-var tempData map[string]interface{}
-var returnData map[string]interface{}
+type Data map[string]interface{}
+
+func (d Data) ToUrlVals() url.Values {
+
+	vals := url.Values{}
+	for k, v := range d {
+
+		t := reflect.TypeOf(v).String()
+		println(k, t)
+
+		switch t {
+		case "string":
+			vals.Add(k, v.(string))
+		case "int":
+			vals.Add(k, format.IntToStr(v.(int)))
+		case "int64":
+			vals.Add(k, format.Int64ToStr(v.(int64)))
+		case "[]string":
+
+			for _, value := range v.([]string) {
+				vals.Add(k, value)
+			}
+		}
+	}
+	return vals
+}
+
+var tempData Data
+var returnData Data
+var newData Data
 var statusCode int
 
 func init() {
@@ -15,16 +46,21 @@ func init() {
 
 func Clean() {
 
-	tempData = make(map[string]interface{})
-	returnData = make(map[string]interface{})
+	tempData = make(Data)
+	returnData = make(Data)
+	newData = make(Data)
 	statusCode = 0
 }
 
-func TempData() map[string]interface{} {
+func TempData() Data {
 	return tempData
 }
 
-func ReturnData() map[string]interface{} {
+func ReturnData() Data {
+	return returnData
+}
+
+func NewData() Data {
 	return returnData
 }
 
@@ -73,4 +109,25 @@ func setReturnData(k string, v interface{}) {
 }
 func replaceReturnData(k string, v interface{}) {
 	returnData[k] = v
+}
+
+
+func setNewData(k string, v interface{}) {
+	_, exist := newData[k]
+	if exist {
+		return
+	} else {
+		newData[k] = v
+	}
+}
+func getNewData(k string) interface{} {
+
+	if k == "" {
+		return nil
+	}
+	_, exist := newData[k]
+	if exist {
+		return newData[k]
+	}
+	return nil
 }

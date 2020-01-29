@@ -7,7 +7,6 @@ import (
 	"sort"
 	"github.com/liyuliang/utils/request"
 	"encoding/json"
-	"log"
 )
 
 type queues struct {
@@ -61,6 +60,7 @@ func (q *queue) PullTasks() (tasks []Task) {
 	return tasks
 }
 
+
 func (q *queue) Downgrade10min() {
 	q.Downgrade(-60 * 10)
 }
@@ -104,6 +104,22 @@ func (q *queue) Online() bool {
 
 func (q *queue) ResetWeight() {
 	q.weight = 0
+}
+
+func (q *queue) ChangeWeightByStatusCode(httpStatusCode int) {
+	switch httpStatusCode {
+
+	case 0:
+	case 200:
+
+		//Do nothing
+	case 403:
+		q.ResetWeight()
+		q.Downgrade60min()
+
+	default:
+		q.Downgrade10min()
+	}
 }
 
 type pool []*queue

@@ -22,11 +22,11 @@ func main() {
 	//if current_queue_max_failed { next queue }
 	//if no_available_queue { hold on }
 	data := format.ToMap(map[string]string{
-		system.SystemGateway: g,
-		system.SystemPort:    p,
-		system.SystemApiAuth: a,
-		system.SecondSleep:   format.IntToStr(sleep),
-		system.MaxError:      format.IntToStr(maxError),
+		system.SystemGateway:            g,
+		system.SystemPort:               p,
+		system.SystemApiAuth:            a,
+		system.SecondSleep:              format.IntToStr(sleep),
+		system.MaxError:                 format.IntToStr(maxError),
 	})
 
 	system.Init(data)
@@ -37,9 +37,9 @@ func main() {
 }
 
 var (
-	a string
-	p string
-	g string
+	a  string
+	p  string
+	g  string
 
 	maxError int
 	sleep    int

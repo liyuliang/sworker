@@ -3,6 +3,7 @@ package worker
 import (
 	"github.com/liyuliang/configmodel"
 	"github.com/liyuliang/sworker/system"
+	"strings"
 )
 
 func init() {
@@ -41,8 +42,10 @@ func (d *array_prefix) Do(a configmodel.Action) {
 		if ok {
 
 			for _, value := range v {
-				newV := prefix + value
-				newArr = append(newArr, newV)
+				if !strings.Contains(value, prefix) {
+					value = prefix + value
+				}
+				newArr = append(newArr, value)
 			}
 			replaceTempData(a.Target.Key, newArr)
 		}

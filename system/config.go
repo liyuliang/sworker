@@ -23,6 +23,7 @@ func SetConfig(key, val string) format.MapData {
 	v[key] = val
 	return v
 }
+
 func Init(data format.MapData) {
 	c = data
 
@@ -39,7 +40,7 @@ func initSpiderConfig(data format.MapData) {
 
 	authApi := gateway + AuthApiPath
 
-	resp, err := request.HttpPost(authApi, c.ToUrlVals())
+	resp, err := request.HttpPost(authApi, data.ToUrlVals())
 	if err != nil {
 		panic(err)
 	}
