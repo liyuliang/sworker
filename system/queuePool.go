@@ -7,6 +7,7 @@ import (
 	"sort"
 	"github.com/liyuliang/utils/request"
 	"encoding/json"
+	"log"
 )
 
 type queues struct {
@@ -34,9 +35,11 @@ func (q *queue) PullTasks() (tasks []Task) {
 
 	gateway := Config()[SystemGateway]
 	queueGetApi := gateway + GetApiPath
+	queueName := Config()[QueuePrefix] + q.Name
 
+	log.Printf(queueName)
 	data := format.ToMap(map[string]string{
-		"queue": q.Name,
+		"queue": queueName,
 		"n":     "1",
 	})
 	html, err := request.HttpPost(queueGetApi, data.ToUrlVals())
@@ -60,15 +63,12 @@ func (q *queue) PullTasks() (tasks []Task) {
 	return tasks
 }
 
-
 func (q *queue) Downgrade10min() {
 	q.Downgrade(-60 * 10)
 }
-
 func (q *queue) Downgrade60min() {
 	q.Downgrade(-60 * 60)
 }
-
 func (q *queue) Downgrade2hour() {
 	q.Downgrade(-60 * 60 * 2)
 }
@@ -183,4 +183,14 @@ func (qs *queues) Get(name string) (q *queue) {
 func (qs *queues) Count() int {
 
 	return len(qs.Pool())
+}
+
+func (qs *queues) ResetPool() {
+
+	for _, q := range qs.pool {
+		log.Printf("queue %s: %d", q.Name, q.Weight())
+		if q.Weight() < 1 {
+			q.NaturalRestore()
+		}
+	}
 }

@@ -1,8 +1,8 @@
 package system
 
 var (
-	QueuePrefix      = "queue_"
-	QueueTotalPrefix = "total_"
+	QueuePrefix      = "queue:"
+	QueueTotalPrefix = "total:"
 
 	AuthApiPath   = "/auth"
 	ListApiPath   = "/queue"
@@ -28,5 +28,6 @@ var (
 )
 
 var (
-	EmptyQueueWait = 60 * 5
+	//EmptyQueueWait = 60 * 5
+	EmptyQueueWait = 5
 )

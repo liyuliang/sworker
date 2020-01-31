@@ -17,7 +17,14 @@ import (
 
 func Start() {
 
-	initQueue()
+	services.AddSingleProcessTask("Reset queue", func(workerNum int) (err error) {
+		initQueue()
+
+		sleep := 30
+		log.Printf("Reset queue name after %ds", sleep)
+		time.Sleep(format.IntToTimeSecond(sleep))
+		return
+	})
 
 	services.AddSingleProcessTask("Pull Job", func(workerNum int) (err error) {
 		pullFromQueue()
@@ -29,20 +36,16 @@ func Start() {
 		return
 	})
 
-	services.AddSingleProcessTask("Report self profile", func(workerNum int) (err error) {
-		//TODO report profile to update token
-		return
-	})
+	//services.AddSingleProcessTask("Report self profile", func(workerNum int) (err error) {
+	//TODO report profile to update token
+	//return
+	//})
 	services.Service().Start(false)
 }
 
 func restoreQueueWeight() {
 	qs := system.Queues()
-	for _, q := range qs.Pool() {
-		if q.Weight() < 1 {
-			q.NaturalRestore()
-		}
-	}
+	qs.ResetPool()
 }
 
 func pullFromQueue() {
@@ -52,7 +55,8 @@ func pullFromQueue() {
 	if qs.Count() == 0 {
 
 		//全部队列为空
-		pending()
+		sleep := pending()
+		log.Printf("Empty queue, wait %ds", sleep)
 
 	} else {
 
@@ -68,7 +72,6 @@ func pullFromQueue() {
 			}
 
 			var taskResult []worker.Data
-			var extendResult []worker.Data
 
 			for _, t := range tasks {
 
@@ -86,22 +89,14 @@ func pullFromQueue() {
 
 				q.ChangeWeightByStatusCode(worker.StatusCode())
 
-
 				result := worker.ReturnData()
 				taskResult = append(taskResult, result)
-
-
-				extend := worker.NewData()
-				extendResult = append(extendResult, extend)
 			}
 
 			if len(taskResult) > 0 {
 				Submit(taskResult)
 			}
 
-			if len(extendResult) > 0 {
-				Submit(extendResult)
-			}
 		}
 	}
 }
@@ -118,22 +113,6 @@ func Submit(data []worker.Data) {
 		for _, actions := range slice {
 
 			request.HttpPost(queueSubmitApi, actions.ToUrlVals())
-		}
-	}
-}
-
-func Extend(data []worker.Data) {
-	gateway := system.Config()[system.SystemGateway]
-
-	queueAddApi := gateway + system.AddApiPath
-
-	chunk := sliceChunk(data, 10)
-
-	for _, slice := range chunk {
-
-		for _, actions := range slice {
-
-			request.HttpPost(queueAddApi, actions.ToUrlVals())
 		}
 	}
 }
@@ -159,10 +138,10 @@ func genActions(queueName string, task system.Task) (as []configmodel.Action) {
 	return as
 }
 
-func pending() {
+func pending() (pendingSecond int) {
 	sleep := system.EmptyQueueWait
-	log.Printf("Empty queue, wait %d second", sleep)
 	time.Sleep(format.IntToTimeSecond(sleep))
+	return sleep
 }
 
 func initQueue() {

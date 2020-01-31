@@ -15,7 +15,12 @@ func (d Data) ToUrlVals() url.Values {
 	vals := url.Values{}
 	for k, v := range d {
 
-		t := reflect.TypeOf(v).String()
+		to := reflect.TypeOf(v)
+		if to == nil {
+			continue
+		}
+
+		t := to.String()
 		println(k, t)
 
 		switch t {
@@ -37,7 +42,6 @@ func (d Data) ToUrlVals() url.Values {
 
 var tempData Data
 var returnData Data
-var newData Data
 var statusCode int
 
 func init() {
@@ -48,7 +52,6 @@ func Clean() {
 
 	tempData = make(Data)
 	returnData = make(Data)
-	newData = make(Data)
 	statusCode = 0
 }
 
@@ -59,11 +62,6 @@ func TempData() Data {
 func ReturnData() Data {
 	return returnData
 }
-
-func NewData() Data {
-	return returnData
-}
-
 func StatusCode() int {
 	return statusCode
 }
@@ -109,25 +107,4 @@ func setReturnData(k string, v interface{}) {
 }
 func replaceReturnData(k string, v interface{}) {
 	returnData[k] = v
-}
-
-
-func setNewData(k string, v interface{}) {
-	_, exist := newData[k]
-	if exist {
-		return
-	} else {
-		newData[k] = v
-	}
-}
-func getNewData(k string) interface{} {
-
-	if k == "" {
-		return nil
-	}
-	_, exist := newData[k]
-	if exist {
-		return newData[k]
-	}
-	return nil
 }

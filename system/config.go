@@ -51,6 +51,7 @@ func initSpiderConfig(data format.MapData) {
 	tplsApi := gateway + TplApiPath
 	tpls, err := request.HttpPost(tplsApi, c.ToUrlVals())
 
+
 	model := make(map[string]string)
 	json.Unmarshal([]byte(tpls), &model)
 
