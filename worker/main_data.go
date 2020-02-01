@@ -21,11 +21,11 @@ func (d Data) ToUrlVals() url.Values {
 		}
 
 		t := to.String()
-		println(k, t)
 
 		switch t {
 		case "string":
-			vals.Add(k, v.(string))
+
+			vals.Add(k, url.QueryEscape(v.(string)))
 		case "int":
 			vals.Add(k, format.IntToStr(v.(int)))
 		case "int64":
@@ -33,7 +33,7 @@ func (d Data) ToUrlVals() url.Values {
 		case "[]string":
 
 			for _, value := range v.([]string) {
-				vals.Add(k, value)
+				vals.Add(k, url.QueryEscape(value))
 			}
 		}
 	}

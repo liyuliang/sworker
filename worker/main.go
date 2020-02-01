@@ -17,7 +17,7 @@ func Run(a configmodel.Action){
 		log.Printf("worker %s is missing from operation type", a.Operation.Type)
 		return
 	}
-	//log.Printf("worker %s prepare run", w().Name())
+
 	w().Do(a)
 
 	data := getTempData(a.Return)

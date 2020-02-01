@@ -18,7 +18,7 @@ func (d *regex_get) Name() string {
 	return "regex_get"
 }
 
-func (d *regex_get) Do(a configmodel.Action)  {
+func (d *regex_get) Do(a configmodel.Action) {
 	t := getTempTarget(a)
 	if t != nil {
 		v, ok := t.(string)
@@ -30,6 +30,7 @@ func (d *regex_get) Do(a configmodel.Action)  {
 				if a.After.Replace.Target != "" {
 					newV = regex.Replace(newV, a.After.Replace.From, a.After.Replace.To)
 				}
+
 				setTempData(a.Target.Key, newV)
 				setTempData(a.Operation.Key, newV)
 			}

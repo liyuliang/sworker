@@ -20,7 +20,7 @@ func Start() {
 	services.AddSingleProcessTask("Reset queue", func(workerNum int) (err error) {
 		initQueue()
 
-		sleep := 30
+		sleep := 10
 		log.Printf("Reset queue name after %ds", sleep)
 		time.Sleep(format.IntToTimeSecond(sleep))
 		return
@@ -90,6 +90,7 @@ func pullFromQueue() {
 				q.ChangeWeightByStatusCode(worker.StatusCode())
 
 				result := worker.ReturnData()
+
 				taskResult = append(taskResult, result)
 			}
 

@@ -3,6 +3,7 @@ package worker
 import (
 	"github.com/liyuliang/configmodel"
 	"github.com/liyuliang/dom-parser"
+	"strings"
 )
 
 func init() {
@@ -19,7 +20,7 @@ func (d *dom_find) Name() string {
 	return "dom_find"
 }
 
-func (d *dom_find) Do(a configmodel.Action){
+func (d *dom_find) Do(a configmodel.Action) {
 	t := getTempTarget(a)
 	if t != nil {
 		d, ok := t.(*parser.Dom)
@@ -27,6 +28,7 @@ func (d *dom_find) Do(a configmodel.Action){
 
 			if a.Operation.Option.Key == "" {
 				v := d.Find(a.Operation.Value).Text()
+				v = removeLineBreak(v)
 				setTempData(a.Operation.Key, v)
 
 			} else {
@@ -41,4 +43,11 @@ func (d *dom_find) Do(a configmodel.Action){
 		}
 	}
 	return
+}
+
+func removeLineBreak(v string) string {
+	v = strings.Replace(v, "\n", "", -1)
+	v = strings.Replace(v, "\t", "", -1)
+	v = strings.Replace(v, " ", "", -1)
+	return v
 }

@@ -59,8 +59,7 @@ func (d *download) Do(a configmodel.Action) {
 	if a.After.Replace.Target == "html" {
 		v = regex.Replace(v, a.After.Replace.From, a.After.Replace.To)
 	}
-
-	//ioutil.WriteFile("a.html", []byte(resp.Data), 0644)
+	ioutil.WriteFile("a.html", []byte(resp.Data), 0644)
 
 	setTempData(a.Target.Key, a.Target.Value)
 	setTempData(a.Operation.Key, v)

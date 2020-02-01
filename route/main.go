@@ -47,8 +47,10 @@ func profile(c *gin.Context) {
 
 func spider(c *gin.Context) {
 
-	u := "https://www.gufengmh8.com/manhua/bailianchengshen/"
-	tpl := system.Config()["gufengmh8_list"]
+	//u := "https://www.gufengmh8.com/manhua/bailianchengshen/"
+	u := "https://www.gufengmh8.com/manhua/woweicangsheng/1207509.html"
+	//tpl := system.Config()["gufengmh8_list"]
+	tpl := system.Config()["gufengmh8_page"]
 
 	model := new(configmodel.Actions)
 	_, err := toml.Decode(tpl, model)
